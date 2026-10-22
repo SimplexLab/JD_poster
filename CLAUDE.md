@@ -6,7 +6,9 @@ figures in `images/` are copied from there and from `../JD_Presentation`.
 
 ## Stack
 
-- LaTeX with the `tcbposter` library of `tcolorbox`, A0 portrait, 3 columns.
+- LaTeX with the `tcbposter` library of `tcolorbox`, 140 cm × 90 cm landscape, 4 columns
+  (NeurIPS 2026 main conference format: https://neurips.cc/Conferences/2026/PosterInstructions).
+- Theme color is the TorchJD logo blue, RGB(26, 129, 235).
 - `symbols.sty` holds the math macros (`\upgrad`, `\jac`, `\vx`, ...), shared with `JD_Presentation`.
 - Code shown on the poster lives in `code/` and is included with `\lstinputlisting`
   (verbatim content cannot go directly inside a `\posterbox` argument).
