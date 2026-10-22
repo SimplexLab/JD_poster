@@ -73,25 +73,35 @@
 % Header
 \posterbox[colback=themecolor, colframe=themecolor, colupper=white, halign=center, valign=center, top=14mm, bottom=14mm,
            height=12.5cm]{name=header, column=1, span=4, below=top}{
-    \begin{minipage}[c]{0.12\linewidth}
+    \begin{minipage}[c]{0.09\linewidth}
         \centering
         \fcolorbox{white}{white}{\color{black}\qrcode[height=8cm, nolink]{https://arxiv.org/abs/2406.16232}}\\[4mm]
         {\large Paper}
     \end{minipage}%
     \hfill
-    \begin{minipage}[c]{0.74\linewidth}
+    \begin{minipage}[c]{0.13\linewidth}
         \centering
-        {\fontsize{110}{130}\selectfont\bfseries Jacobian Descent for Multi-Objective Optimization\par}
+        \includegraphics[width=\linewidth]{images/logos/simplexlab_white.pdf}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[c]{0.54\linewidth}
+        \centering
+        {\fontsize{92}{110}\selectfont\bfseries Jacobian Descent for Multi-Objective Optimization\par}
         \vspace{14mm}
         {\Huge Pierre Quinton$^\ast$ {\Large(LTHI, EPFL)} \hspace{2.5cm} Val\'erian Rey$^\ast$ {\Large(SimplexLab)}\par}
         \vspace{4mm}
         {\large $^\ast$Equal contribution\par}
     \end{minipage}%
     \hfill
-    \begin{minipage}[c]{0.12\linewidth}
+    \begin{minipage}[c]{0.13\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/logos/torchjd_white.png}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[c]{0.09\linewidth}
         \centering
         \fcolorbox{white}{white}{\color{black}\qrcode[height=8cm, nolink]{https://github.com/SimplexLab/TorchJD}}\\[4mm]
-        {\large Code: TorchJD}
+        {\large Code}
     \end{minipage}
 }
 
@@ -134,7 +144,7 @@
     Aggregate an \emph{estimate} of the Jacobian (SEJD), or a random \emph{subset of its rows} (stochastic sub-Jacobian descent, SSJD), as SGD does with gradients.
 }
 
-\posterbox[adjusted title=What makes a good aggregator?]{name=properties, column=1, between=jd and bottom}{
+\posterbox[adjusted title=What makes a good aggregator?]{name=properties, column=1, below=jd}{
     \begin{keybox}
         \textbf{Non-conflicting.} $\0\pleq \J\,\A(\J)$\\[2mm]
         {\small No objective increases, to first order. $\A(\J)$ lies in the \emph{dual cone} of the gradients.}
@@ -149,9 +159,10 @@
     \end{keybox}
 }
 
-\posterbox[adjusted title=Existing aggregators fall short]{name=table, column=2, below=takeaway}{
+\posterbox[adjusted title=Existing aggregators fall short]{name=table, column=1, between=properties and bottom}{
     \centering
-    \small
+    \footnotesize
+    \renewcommand{\arraystretch}{0.95}
     \rowcolors{2}{tablerow}{}
     \begin{tabular}{lccc}
         \toprule
@@ -175,10 +186,15 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Column 2
-\posterbox[adjusted title=UPGrad: Unconflicting Projection of Gradients]{name=upgrad, column=2, between=table and bottom}{
-    \textbf{Project each gradient onto the dual cone, then average.}
+\posterbox[adjusted title=UPGrad: Unconflicting Projection of Gradients]{name=upgrad, column=2, between=takeaway and bottom}{
+    \textbf{Project each gradient onto the dual cone (green), then average.}
     \begin{center}
-        \includegraphics[width=0.85\linewidth]{images/direction_upgrad.pdf}
+        \includegraphics[width=0.66\linewidth]{images/direction_upgrad.pdf}\\[2mm]
+        {\small (a) $\upgrad$ never conflicts with $\vg_1$ or $\vg_2$.\par}
+        \vspace{6mm}
+        \includegraphics[width=0.66\linewidth]{images/directions.pdf}\\[2mm]
+        {\small (b) $\meanagg$ conflicts with $\vg_1$. $\dualproj$ lands on the cone's boundary.
+        $\mgda$ is almost orthogonal to $\vg_2$ because of its larger norm.\par}
     \end{center}
     \vspace{-5mm}
     \[
@@ -253,7 +269,12 @@
     \[
         \A\big(\jac \vf(\vx)\big) = \nabla \Big(\W\big(\gram \vf(\vx)\big)^\T \vf\Big)(\vx)
     \]
-    A step needs only the \textbf{$m\times m$ Gramian}, accumulated layer by layer \textbf{without storing the Jacobian}, and \textbf{one backward pass}.
+    A step needs only the \textbf{$m\times m$ Gramian} and \textbf{one backward pass}.
+    Like gradients, Gramians can be backpropagated, \textbf{without ever storing the Jacobian}:
+    \begin{align*}
+        \text{(chain rule)}\quad & \gram (\vf\circ \vg)(\vx)=\jac \vf\big(\vg(\vx)\big)\; \gram \vg(\vx)\; \jac \vf\big(\vg(\vx)\big)^\T\\[2mm]
+        \text{(sum rule)}\quad & \gram \vf(\vx_1, \dots, \vx_k)=\sum_{i=1}^k \gram_{\vx_i} \vf(\vx_1,\dots, \vx_k)
+    \end{align*}
 
     \begin{center}
         \Large Memory: $\bigo(mn)\;\to\;\bigo(n+m^2)$\\[3mm]
@@ -262,17 +283,13 @@
 }
 
 \posterbox[adjusted title=TorchJD: JD in PyTorch]{name=torchjd, column=4, between=iwrm and bottom}{
+    \begin{keybox}[halign=center]
+        \Large\ttfamily\bfseries pip install "torchjd[quadprog\_projector]"
+    \end{keybox}
 \lstinputlisting[style=pythonstyle]{code/usage.py}
-    \begin{minipage}[c]{0.4\linewidth}
-        \centering
-        \includegraphics[width=0.8\linewidth]{images/logos/torchjd2.png}
-    \end{minipage}%
-    \hfill
-    \begin{minipage}[c]{0.56\linewidth}
-        \centering
-        {\large\texttt{pip install torchjd}}\\[4mm]
-        {\small \href{https://github.com/SimplexLab/TorchJD}{github.com/SimplexLab/TorchJD}\\[2mm]\href{https://torchjd.org}{torchjd.org}\par}
-    \end{minipage}
+    \begin{center}
+        \href{https://github.com/SimplexLab/TorchJD}{github.com/SimplexLab/TorchJD}
+    \end{center}
 }
 
 \end{tcbposter}
