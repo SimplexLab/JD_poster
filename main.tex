@@ -144,7 +144,7 @@
     Aggregate an \emph{estimate} of the Jacobian (SEJD), or a random \emph{subset of its rows} (stochastic sub-Jacobian descent, SSJD), as SGD does with gradients.
 }
 
-\posterbox[adjusted title=What makes a good aggregator?]{name=properties, column=1, below=jd}{
+\posterbox[adjusted title=What makes a good aggregator?]{name=properties, column=1, between=jd and bottom}{
     \begin{keybox}
         \textbf{Non-conflicting.} $\0\pleq \J\,\A(\J)$\\[2mm]
         {\small No objective increases, to first order. $\A(\J)$ lies in the \emph{dual cone} of the gradients.}
@@ -157,12 +157,8 @@
         \textbf{Weighted.} $\A(\J) = \J^\T\vw$ for some $\vw\in\Rm$\\[2mm]
         {\small The update stays in the span of the gradients, where the first-order approximation is most accurate.}
     \end{keybox}
-}
-
-\posterbox[adjusted title=Existing aggregators fall short]{name=table, column=1, between=properties and bottom}{
-    \centering
-    \footnotesize
-    \renewcommand{\arraystretch}{0.95}
+    \begin{center}
+    \small
     \rowcolors{2}{tablerow}{}
     \begin{tabular}{lccc}
         \toprule
@@ -182,7 +178,9 @@
         \rowcolor{themecolor!15} $\upgrad$ \textbf{(ours)} & \cmark & \cmark & \cmark\\
         \bottomrule
     \end{tabular}
+    \end{center}
 }
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Column 2
