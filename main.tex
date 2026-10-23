@@ -187,10 +187,10 @@
 \posterbox[adjusted title=UPGrad: Unconflicting Projection of Gradients]{name=upgrad, column=2, between=takeaway and bottom}{
     \textbf{Project each gradient onto the dual cone (green), then average.}
     \begin{center}
-        \includegraphics[width=0.66\linewidth]{images/direction_upgrad.pdf}\\[2mm]
+        \includegraphics[width=0.95\linewidth]{images/direction_upgrad.pdf}\\[2mm]
         {\small (a) $\upgrad$ never conflicts with $\vg_1$ or $\vg_2$.\par}
         \vspace{6mm}
-        \includegraphics[width=0.66\linewidth]{images/directions.pdf}\\[2mm]
+        \includegraphics[width=0.95\linewidth]{images/directions.pdf}\\[2mm]
         {\small (b) $\meanagg$ conflicts with $\vg_1$. $\dualproj$ lands on the cone's boundary.
         $\mgda$ is almost orthogonal to $\vg_2$ because of its larger norm.\par}
     \end{center}
@@ -203,10 +203,6 @@
     \begin{itemize}
         \item Satisfies \hl{all three properties}.
         \item If no two gradients conflict, it is simply the \textbf{mean}.
-        \item \textbf{Cheap dual form}: $\proj_\J(\J^\T\vu)=\J^\T\vw$, with $\vw$ solving an $m$-dimensional QP that only depends on the Gramian $\J\J^\T$:
-        \[
-            \vw\in\argmin_{\vv:\;\vu\pleq \vv}\; \vv^\T \J\J^\T \vv
-        \]
     \end{itemize}
 }
 
@@ -266,6 +262,10 @@
     For weighted aggregators with weights $\W(\G)$ depending only on the Gramian $\G=\J\J^\T$:
     \[
         \A\big(\jac \vf(\vx)\big) = \nabla \Big(\W\big(\gram \vf(\vx)\big)^\T \vf\Big)(\vx)
+    \]
+    For $\upgrad$, by duality, $\proj_\J(\J^\T\vu)=\J^\T\vw$ where $\vw$ solves an $m$-dimensional QP that only depends on the Gramian:
+    \[
+        \vw\in\argmin_{\vv:\;\vu\pleq \vv}\; \vv^\T \G \vv
     \]
     A step needs only the \textbf{$m\times m$ Gramian} and \textbf{one backward pass}.
     Like gradients, Gramians can be backpropagated, \textbf{without ever storing the Jacobian}:
