@@ -24,9 +24,11 @@
 \usepackage[poster]{tcolorbox}
 \usepackage{symbols}
 
-\definecolor{themecolor}{RGB}{26,129,235} % TorchJD logo blue
-\definecolor{darktext}{RGB}{35,35,45}
-\definecolor{pagebg}{RGB}{246,246,248}
+% Palette of the NeurIPS poster template and logo.
+\definecolor{themecolor}{HTML}{68448B} % NeurIPS logo purple
+\definecolor{headtext}{HTML}{323539}   % NeurIPS logo charcoal (title, section headers)
+\definecolor{darktext}{HTML}{344854}   % template body text
+\definecolor{mutedtext}{HTML}{677B8C}  % template secondary text (captions)
 \colorlet{tablerow}{themecolor!8}
 
 \hypersetup{colorlinks, allcolors=themecolor}
@@ -53,56 +55,52 @@
     left=8mm, right=8mm, top=4mm, bottom=4mm, borderline west={3mm}{0pt}{themecolor}, #1
 }
 
-\pagecolor{pagebg}
-
 \begin{document}
 \begin{tcbposter}[
-    coverage={spread, interior style={fill=pagebg}},
+    coverage={spread, interior style={fill=white}},
     poster={columns=4, rows=40, colspacing=18mm, rowspacing=10mm, spacing=20mm, showframe=false},
     boxes={
-        enhanced, colback=white, colframe=white, boxrule=0pt, arc=4mm,
+        enhanced, colback=white, colframe=white, boxrule=0pt, arc=0mm,
         left=12mm, right=12mm, top=6mm, bottom=8mm,
-        colbacktitle=white, coltitle=themecolor, fonttitle=\bfseries\huge, halign title=flush left,
-        titlerule=1.5mm, titlerule style={themecolor}, toptitle=6mm, bottomtitle=3mm,
+        colbacktitle=white, coltitle=headtext, fonttitle=\fontseries{sb}\selectfont\huge, halign title=flush left,
+        lefttitle=12mm, titlerule=0mm, toptitle=6mm, bottomtitle=2mm,
         left skip=0mm, right skip=0mm,
         before upper={\setlength{\parskip}{0.6em}},
-        drop fuzzy shadow=black!25,
     },
 ]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Header
-\posterbox[colback=themecolor, colframe=themecolor, colupper=white, halign=center, valign=center, top=14mm, bottom=14mm,
-           height=12.5cm]{name=header, column=1, span=4, below=top}{
-    \begin{minipage}[c]{0.09\linewidth}
-        \centering
-        \fcolorbox{white}{white}{\color{black}\qrcode[height=8cm, nolink]{https://arxiv.org/abs/2406.16232}}\\[4mm]
-        {\large Paper}
-    \end{minipage}%
-    \hfill
-    \begin{minipage}[c]{0.13\linewidth}
-        \centering
-        \includegraphics[width=\linewidth]{images/logos/simplexlab_white.pdf}
-    \end{minipage}%
-    \hfill
-    \begin{minipage}[c]{0.54\linewidth}
-        \centering
-        {\fontsize{92}{110}\selectfont\bfseries Jacobian Descent for Multi-Objective Optimization\par}
-        \vspace{14mm}
+\posterbox[valign=center, top=10mm, bottom=10mm, height=12.5cm]{name=header, column=1, span=4, below=top}{
+    \begin{minipage}[c]{0.57\linewidth}
+        {\color{headtext}\fontsize{92}{110}\fontseries{sb}\selectfont Jacobian Descent for Multi-Objective Optimization\par}
+        \vspace{12mm}
         {\Huge Pierre Quinton$^\ast$ {\Large(LTHI, EPFL)} \hspace{2.5cm} Val\'erian Rey$^\ast$ {\Large(SimplexLab)}\par}
         \vspace{4mm}
-        {\large $^\ast$Equal contribution\par}
+        {\large\color{mutedtext} $^\ast$Equal contribution\par}
     \end{minipage}%
     \hfill
-    \begin{minipage}[c]{0.13\linewidth}
+    \begin{minipage}[c]{0.07\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{images/logos/torchjd_white.pdf}
+        \qrcode[height=8cm, nolink]{https://arxiv.org/abs/2406.16232}\\[3mm]
+        {\large Paper}
     \end{minipage}%
-    \hfill
-    \begin{minipage}[c]{0.09\linewidth}
+    \hspace{1.5cm}%
+    \begin{minipage}[c]{0.07\linewidth}
         \centering
-        \fcolorbox{white}{white}{\color{black}\qrcode[height=8cm, nolink]{https://github.com/SimplexLab/TorchJD}}\\[4mm]
+        \qrcode[height=8cm, nolink]{https://github.com/SimplexLab/TorchJD}\\[3mm]
         {\large Code}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[c]{0.12\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/logos/simplexlab.pdf}\\[9mm]
+        \includegraphics[width=\linewidth]{images/logos/torchjd.pdf}
+    \end{minipage}%
+    \hfill
+    \begin{minipage}[c]{0.11\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/logos/neurips.pdf}
     \end{minipage}
 }
 

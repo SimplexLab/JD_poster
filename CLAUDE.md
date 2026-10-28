@@ -8,15 +8,19 @@ figures in `images/` are copied from there and from `../JD_Presentation`.
 
 - LaTeX with the `tcbposter` library of `tcolorbox`, 140 cm × 90 cm landscape, 4 columns
   (NeurIPS 2026 main conference format: https://neurips.cc/Conferences/2026/PosterInstructions).
-- Theme color is the TorchJD logo blue, RGB(26, 129, 235).
+- Styled after the NeurIPS poster template (`pptTemplate.pptx`): white background, plain section headers,
+  colors from the NeurIPS logo (purple `#68448B` accent, charcoal `#323539` headers, slate `#344854` text).
 - `symbols.sty` holds the math macros (`\upgrad`, `\jac`, `\vx`, ...), shared with `JD_Presentation`.
 - Code shown on the poster lives in `code/` and is included with `\lstinputlisting`
   (verbatim content cannot go directly inside a `\posterbox` argument).
 - A box can only be placed relative to boxes defined *earlier* in the source.
 - Images must be vector (PDF/SVG) or very high resolution; check with `pdfimages -list main.pdf`.
-  - `images/logos/torchjd_white.pdf` comes from `../TorchJD/docs/source/icons/TorchJD_text_dark.svg`
-    with all fills set to white, exported with `inkscape --export-text-to-path` (the wordmark needs
-    the free "Louis George Cafe" font installed).
+  - `images/logos/torchjd.pdf` comes from `../TorchJD/docs/source/icons/TorchJD_text.svg` with black
+    replaced by `#323539`, exported with `inkscape --export-text-to-path` (the wordmark needs the free
+    "Louis George Cafe" font installed).
+  - `images/logos/simplexlab.pdf` is the white SimplexLab logo with the triangle and the dot of the "i"
+    recolored to `#529D68` (the green of the SimplexLab GitHub avatar) and the text to `#323539`.
+  - `images/logos/neurips.pdf` comes from https://neurips.cc/static/core/img/NeurIPS-logo.svg.
   - `images/CQF_values.pdf` comes from `../TorchJD/tests/trajectories/` (see its CONTRIBUTING.md),
     plotted with `savefig.dpi: 600` in a `matplotlibrc` so the embedded heatmaps are high resolution.
 
