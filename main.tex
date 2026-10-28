@@ -5,6 +5,7 @@
 
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
+\usepackage{fixcmex} % Make large operators (sums, ...) scale with the 34pt font
 \usepackage[default]{sourcesanspro}
 \usepackage{scrextend}
 \changefontsizes[34pt]{27pt}
@@ -95,7 +96,7 @@
     \hfill
     \begin{minipage}[c]{0.13\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{images/logos/torchjd_white.png}
+        \includegraphics[width=\linewidth]{images/logos/torchjd_white.pdf}
     \end{minipage}%
     \hfill
     \begin{minipage}[c]{0.09\linewidth}
@@ -200,6 +201,15 @@
         \qquad
         \proj_\J(\vx)= \argmin_{\vy:\;\0\pleq \J \vy} \| \vy-\vx \|^2
     \]
+    \textbf{Dual formulation.} For any $\vu\in\Rm$, $\proj_\J(\J^\T\vu)=\J^\T\vw$ with
+    \[
+        \vw\in\argmin_{\vv:\;\vu\pleq \vv}\; \vv^\T \J\J^\T \vv
+    \]
+    an $m$-dimensional QP, independent of $n$.
+    Taking $\vu=\ve_i$ gives weights $\vw_i$, and
+    \[
+        \upgrad(\J)=\J^\T\Big(\frac1m\sum_{i=1}^m\vw_i\Big)
+    \]
     \begin{itemize}
         \item Satisfies \hl{all three properties}.
         \item If no two gradients conflict, it is simply the \textbf{mean}.
@@ -259,13 +269,9 @@
 }
 
 \posterbox[adjusted title=Gramian-based Jacobian descent]{name=gramian, column=3, between=convergence and bottom}{
-    For weighted aggregators with weights $\W(\G)$ depending only on the Gramian $\G=\J\J^\T$:
+    For \textbf{all weighted aggregators of the table}, the weights $\W(\G)$ only depend on the Gramian $\G=\J\J^\T$, so
     \[
         \A\big(\jac \vf(\vx)\big) = \nabla \Big(\W\big(\gram \vf(\vx)\big)^\T \vf\Big)(\vx)
-    \]
-    For $\upgrad$, by duality, $\proj_\J(\J^\T\vu)=\J^\T\vw$ where $\vw$ solves an $m$-dimensional QP that only depends on the Gramian:
-    \[
-        \vw\in\argmin_{\vv:\;\vu\pleq \vv}\; \vv^\T \G \vv
     \]
     A step needs only the \textbf{$m\times m$ Gramian} and \textbf{one backward pass}.
     Like gradients, Gramians can be backpropagated, \textbf{without ever storing the Jacobian}:

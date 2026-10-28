@@ -13,6 +13,12 @@ figures in `images/` are copied from there and from `../JD_Presentation`.
 - Code shown on the poster lives in `code/` and is included with `\lstinputlisting`
   (verbatim content cannot go directly inside a `\posterbox` argument).
 - A box can only be placed relative to boxes defined *earlier* in the source.
+- Images must be vector (PDF/SVG) or very high resolution; check with `pdfimages -list main.pdf`.
+  - `images/logos/torchjd_white.pdf` comes from `../TorchJD/docs/source/icons/TorchJD_text_dark.svg`
+    with all fills set to white, exported with `inkscape --export-text-to-path` (the wordmark needs
+    the free "Louis George Cafe" font installed).
+  - `images/CQF_values.pdf` comes from `../TorchJD/tests/trajectories/` (see its CONTRIBUTING.md),
+    plotted with `savefig.dpi: 600` in a `matplotlibrc` so the embedded heatmaps are high resolution.
 
 ## Workflow
 
